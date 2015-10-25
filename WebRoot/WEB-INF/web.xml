@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
+  <display-name></display-name>
+  <context-param>
+		<param-name>contextClass</param-name>
+		<param-value>org.springframework.web.context.support.XmlWebApplicationContext</param-value>
+  </context-param>
+  <context-param>
+  	<param-name>contextConfigLocation</param-name>
+  	<param-value>/WEB-INF/spring/context.xml</param-value>
+  </context-param>
+  <context-param>
+  	<param-name>log4jConfigLocation</param-name>
+  	<param-value>classpath:log4j.properties</param-value>
+  </context-param>
+  <listener>
+  	<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+  </listener>
+  <listener>
+  	<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+  <servlet>
+  	<servlet-name>springMvc</servlet-name>
+  	<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+  	<!-- spring mvc框架模式读取 [DispatcherServlet name]-servlet.xml的配置文件来配置  DispatcherServlet
+  	或者通过servlet中的param来自定义配置文件的路径。 -->
+  	<init-param>
+       <param-name>contextConfigLocation</param-name>
+       <param-value>/WEB-INF/springmvc-servlet.xml</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>springMvc</servlet-name>
+  	<url-pattern>*.do</url-pattern> <!-- 如果 拦截路径设为/* 的时候，请求不到静态文件的内容 -->
+  </servlet-mapping>
+  
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
+</web-app>

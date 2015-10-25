@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration >
+   <typeAliases>
+		<typeAlias alias="hashmap" 				type="java.util.HashMap" />
+		<typeAlias alias="String" 				type="java.lang.String" />
+		<typeAlias alias="Integer" 				type="java.lang.Integer" />
+		<typeAlias alias="Article" 				type="com.icike.it.article.articleContent.vo.Article" />
+		<typeAlias alias="Comment" 				type="com.icike.it.article.comment.vo.Comment" />
+   </typeAliases>
+   <mappers>
+   		<mapper resource="META-INF/mapper/article_mapper.xml" />
+   		<mapper resource="META-INF/mapper/comment_mapper.xml" />
+   </mappers>
+</configuration>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ 		xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd ">
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="com.mysql.jdbc.Driver" />
+		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/mytzone?characterEncoding=utf-8&amp;autoReconnect=true" />
+		<property name="user" value="root" />
+		<property name="password" value="5613996" />
+		<property name="initialPoolSize" value="10" />
+		<property name="minPoolSize" value="5" />
+		<property name="maxPoolSize" value="20" />
+		<property name="maxStatements" value="50" />
+		<property name="testConnectionOnCheckout" value="true" />
+	</bean>
+	<!-- 创建session 还应该向 fatory提供mybatis的环境配置  -->
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation" value="classpath:mybatis-config.xml"/>
+	</bean>
+	<!-- <bean id="isolationLevel" class="org.apache.ibatis.session.TransactionIsolationLevel">
+		<constructor-arg index="0" type="java.lang.String">
+			<value>4</value>
+		</constructor-arg>   设置事务隔离等级  4 表示 可重复读
+	</bean>
+	<bean id="jdbcTransaction" class="org.apache.ibatis.transaction.jdbc.JdbcTransaction">
+		<constructor-arg index="0" ref="dataSource"/>
+		<constructor-arg index="1" ref="isolationLevel"/>
+		<constructor-arg index="2" type="Boolean">
+			<value>false</value>
+		</constructor-arg>
+	</bean> -->
+	<!-- mapperScannerConfigurer 主要是根据mapper自动创建 mapperfatorybean mapperfatorybean 需要指定 需要映射实现的接口类。-->
+	<bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="sqlSessionFactoryBeanName" value="sqlSession" />
+		<property name="annotationClass" value="com.icike.it.common.util.IcikeDaoSuperInterface"/> <!-- 定义扫描规则，是只扫描 用指定注解类注解的dao接口，还是只扫描继承指定接口的 接口。 -->
+		<!-- basepackage 希望 mapperScannerConfigurer 自动在指定的包路径下去扫描mapper interface 来根据mapper配置文件来实现映射-->
+		<property name="basePackage" value="com.icike.it.article,com.icike.it.category" />
+	</bean>
+</beans>
